@@ -12,30 +12,42 @@ const instructionText = document.getElementById('instruction-text');
 const candyFloor = document.getElementById('candy-floor');
 const audio = document.getElementById('bday-song');
 
-// --- 0. GOLDEN CURSOR TRAIL ---
-document.addEventListener('mousemove', function(e) {
-    const trail = document.createElement('div');
-    trail.className = 'trail';
-    trail.style.left = e.pageX + 'px';
-    trail.style.top = e.pageY + 'px';
-    document.body.appendChild(trail);
-    setTimeout(() => {
-        trail.style.opacity = '0';
-        trail.style.transform = 'scale(0.5)';
-    }, 10);
-    setTimeout(() => {
-        trail.remove();
-    }, 300);
-});
+// --- 0. GOLDEN CURSOR TRAIL (DESKTOP ONLY) ---
+// We check if the device uses a fine pointer (mouse). If touch, we skip this.
+if (window.matchMedia("(pointer: fine)").matches) {
+    document.addEventListener('mousemove', function(e) {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+        trail.style.left = e.pageX + 'px';
+        trail.style.top = e.pageY + 'px';
+        document.body.appendChild(trail);
+        setTimeout(() => {
+            trail.style.opacity = '0';
+            trail.style.transform = 'scale(0.5)';
+        }, 10);
+        setTimeout(() => {
+            trail.remove();
+        }, 300);
+    });
+}
 
 // --- 1. INTRO: OPEN SURPRISE ---
 giftBox.addEventListener('click', () => {
     audio.play().catch(e => console.log("Audio requires interaction"));
     
+    // Animate box exploding
     gsap.to('.glass-vault', { scale: 1.5, opacity: 0, duration: 0.5, ease: "power2.in" });
+    
+    // Fade out overlay
     gsap.to('#intro-overlay', { opacity: 0, duration: 1, delay: 0.4, onComplete: () => {
         introOverlay.style.display = 'none';
+        
+        // REVEAL PARTY CONTAINER
         partyContainer.classList.remove('hidden');
+        
+        // Force Visibility ON (GSAP handles the fade in)
+        gsap.set(".content-wrapper", { visibility: "visible" });
+        
         initParty();
     }});
     
@@ -44,21 +56,24 @@ giftBox.addEventListener('click', () => {
 
 // --- 2. START THE SHOW ---
 function initParty() {
-    // Text Animations
-    gsap.from('.party-title', { y: 100, opacity: 0, duration: 1.5, ease: "power4.out" });
-    gsap.from('.name-highlight', { scale: 0.5, opacity: 0, duration: 1.5, delay: 0.3, ease: "back.out(1.7)" });
-    gsap.from('.subtitle', { opacity: 0, duration: 1.5, delay: 1 });
+    // 1. Fade in the whole wrapper smoothly (Fixes the "Stuck" glitch)
+    gsap.to(".content-wrapper", { opacity: 1, duration: 1 });
+
+    // 2. Animate Elements one by one
+    gsap.from('.party-title', { y: 50, opacity: 0, duration: 1.5, delay: 0.5, ease: "power4.out" });
+    gsap.from('.name-highlight', { scale: 0.5, opacity: 0, duration: 1.5, delay: 0.8, ease: "back.out(1.7)" });
+    gsap.from('.subtitle', { opacity: 0, duration: 1.5, delay: 1.5 });
 
     // 3D Elements Entry
     gsap.from('.cake-section', { scale: 0, rotation: -45, opacity: 0, duration: 1.5, delay: 0.5, ease: "elastic.out(1, 0.75)" });
-    gsap.from('.left-panel', { x: -200, opacity: 0, duration: 1.2, delay: 0.8, ease: "power2.out" });
-    gsap.from('.right-panel', { x: 200, opacity: 0, duration: 1.2, delay: 0.8, ease: "power2.out" });
+    gsap.from('.left-panel', { x: -50, opacity: 0, duration: 1.2, delay: 1, ease: "power2.out" });
+    gsap.from('.right-panel', { x: 50, opacity: 0, duration: 1.2, delay: 1, ease: "power2.out" });
     
-    gsap.from('.bottom-quote-area', { y: 100, opacity: 0, duration: 1, delay: 1.5 });
+    gsap.from('.bottom-quote-area', { y: 50, opacity: 0, duration: 1, delay: 1.5 });
 
     scatterCandies();
     
-    // Initialize 3D Tilt
+    // Initialize 3D Tilt (Only checks on load, styling handles mobile disable)
     VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
         max: 15,
         speed: 400,
@@ -120,7 +135,7 @@ function scatterCandies() {
         
         // Gentle Floating at Bottom
         gsap.to(candy, {
-            y: -30, // Reduced movement so it doesn't fly into photo
+            y: -30, 
             rotation: rotation + 50,
             duration: 3 + Math.random() * 3,
             repeat: -1,
