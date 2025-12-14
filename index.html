@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>✨ A Surprise for Greeshma</title>
+    
+    <meta property="og:title" content="The Celebration Protocol | Greeshma">
+    <meta property="og:description" content="A digital artifact crafted for the muse. Tap to unlock.">
+    <meta property="og:image" content="greeshma.jpg"> <meta property="og:url" content="https://your-website-link.vercel.app">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+</head>
+<body>
+
+    <div id="magic-container"></div>
+
+    <div id="cursor-trail"></div>
+
+    <div id="intro-overlay">
+        <div class="glass-vault" id="gift-box">
+            <div class="ribbon-vertical"></div>
+            <div class="ribbon-horizontal"></div>
+            <div class="lid"></div>
+            <div class="box-body">
+                <span class="emoji-glow">🎁</span>
+            </div>
+            <p class="click-instruction">Open for a Surprise ✨</p>
+        </div>
+    </div>
+
+    <div id="party-container" class="hidden">
+        
+        <div class="content-wrapper">
+             
+             <div class="title-section">
+                <h1 class="party-title">Happy Birthday</h1>
+                <h2 class="name-highlight">Greeshma <span class="bouncing-emojis">🎂🎈🎉🥳</span></h2>
+             </div>
+             
+             <p class="subtitle" id="instruction-text">Make a wish & blow out the candles!</p>
+
+             <div class="main-stage">
+                 
+                 <div class="side-panel left-panel">
+                     <div class="tilt-card" data-tilt>
+                         <div class="photo-frame">
+                            <div class="gloss-overlay"></div>
+                            <img src="greeshma.jpg" alt="The Birthday Girl" class="profile-pic">
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="cake-section">
+                     <div class="cake-container">
+                         <div class="cake">
+                             <div class="icing"></div>
+                             <div class="cherry"></div><div class="cherry c2"></div><div class="cherry c3"></div>
+                             <div class="candles-container">
+                                 <div class="candle" onclick="blowCandle(this)"><div class="flame"></div><div class="wick"></div><div class="wax"></div></div>
+                                 <div class="candle" onclick="blowCandle(this)"><div class="flame"></div><div class="wick"></div><div class="wax"></div></div>
+                                 <div class="candle" onclick="blowCandle(this)"><div class="flame"></div><div class="wick"></div><div class="wax"></div></div>
+                             </div>
+                             <div class="cake-layer top-layer"></div>
+                             <div class="cake-layer middle-layer"></div>
+                             <div class="cake-layer bottom-layer"></div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="side-panel right-panel">
+                     <div class="tilt-card" data-tilt>
+                         <div class="poem-card">
+                             <div class="gloss-overlay"></div>
+                             <h3>The Muse</h3>
+                             <p id="compliment-text">
+                                 "You are the poem<br>
+                                 the world wrote<br>
+                                 when it was feeling<br>
+                                 beautiful."
+                             </p>
+                             <button id="compliment-btn" onclick="generateCompliment()">✨ Reveal Magic ✨</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="bottom-quote-area">
+                 <p>"In a world full of noise, thank you for being the melody."</p>
+                 <div class="signature">- SANDEEP</div>
+             </div>
+        </div>
+
+        <div id="candy-floor"></div>
+    </div>
+
+    <audio id="bday-song" src="song.mp3" preload="auto" loop></audio>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
